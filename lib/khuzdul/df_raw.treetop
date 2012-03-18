@@ -1,0 +1,87 @@
+grammar DfRaw
+  rule raw_file
+    file_name_line obj_decl obj_def*
+  end
+
+  rule line_separator
+    "\r"? "\n"
+  end
+
+  rule entity_separator
+    line_separator line_separator?
+  end
+
+  rule attr_separator
+    line_separator?
+  end
+
+  rule cmnt
+    [^\[]*
+  end
+
+  rule name
+    [a-zA-Z_]+
+  end
+
+ rule string
+    [a-zA-Z 0-9]+
+  end
+
+  rule int
+    [0-9]+
+  end
+
+  rule rgb
+    int ":" int ":" int
+  end
+
+  rule value
+    rgb / int / string
+  end
+
+  rule attr
+    "[" name ":" value "]"
+    /
+    "[" name "]"
+  end
+
+  rule attr_entity
+    attr cmnt? attr_separator
+  end
+
+
+
+  rule file_name_line
+     name entity_separator
+  end
+
+  rule obj_type
+    name {
+      def to_s
+        text_value
+      end
+    }
+  end
+
+  rule obj_decl
+    "[OBJECT:" obj_type "]" entity_separator
+  end
+
+  rule obj_subtype
+    name {
+      def to_s
+        text_value
+      end
+    }
+  end
+
+  rule obj_def
+    cmnt? "[" obj_subtype ":" name "]" line_separator attr_entity* line_separator* {
+      def printable?; true; end
+      def inspect
+        obj_subtype.to_s+":"+name.text_value
+      end
+    }
+  end
+
+end

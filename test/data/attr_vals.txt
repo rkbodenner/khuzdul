@@ -1,0 +1,1 @@
+this is a string it lacks a starting brace and cannot span multiple lines
