@@ -1,3 +1,5 @@
+require 'khuzdul/node_types'
+
 grammar DfRaw
   rule raw_file
     file_name_line obj_decl obj_def*
@@ -19,7 +21,7 @@ grammar DfRaw
     [^\[]*
   end
 
-  rule name
+  rule name_token
     [a-zA-Z_]+
   end
 
@@ -35,28 +37,32 @@ grammar DfRaw
     int ":" int ":" int
   end
 
-  rule value
+  rule value_token
     rgb / int / string
   end
 
   rule attr
-    "[" name ":" value "]"
+    "[" name_token ":" value_token "]" <DfRaw::AttrPair>
     /
-    "[" name "]"
+    "[" name_token "]"
   end
 
   rule attr_entity
-    attr cmnt? attr_separator
+    attr cmnt? attr_separator <DfRaw::AttrEntity>
+  end
+
+  rule attr_entity_list
+    attr_entity*
   end
 
 
 
   rule file_name_line
-     name entity_separator
+     name_token entity_separator
   end
 
   rule obj_type
-    name <DfRaw::RawObjectType>
+    name_token <DfRaw::RawObjectType>
   end
 
   rule obj_decl
@@ -64,11 +70,11 @@ grammar DfRaw
   end
 
   rule obj_subtype
-    name <DfRaw::RawObjectType>
+    name_token <DfRaw::RawObjectType>
   end
 
   rule obj_def
-    cmnt? "[" obj_subtype ":" name "]" line_separator attr_entity* line_separator* <DfRaw::RawObject>
+    cmnt? "[" obj_subtype ":" name_token "]" line_separator attr_entity_list line_separator* <DfRaw::RawObject>
   end
 
 end

@@ -46,7 +46,9 @@ temperature values unknown, used nickel
 [SOLID_DENSITY:8650]
 
 EOT
-    parse(text)
+    material_def = parse(text)
+    assert_equal 'NICKEL_SILVER', material_def.type_name
+    assert_equal 'nickel silver', material_def.attributes.first.value
   end
 
   def test_raw_file
