@@ -22,6 +22,7 @@ task :test => ['test:all']
 namespace :test do
   Rake::TestTask.new("units") { |t|
     t.pattern = 'test/units/*_test.rb'
+    t.libs << 'test'
     t.verbose = true
     t.warning = true
   }

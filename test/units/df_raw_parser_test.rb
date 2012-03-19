@@ -3,7 +3,7 @@ require 'test/unit'
 require 'treetop'
 
 dir = File.dirname(__FILE__)
-require File.expand_path("#{dir}/../test_helper")
+require "test_helper"
 
 Treetop.load File.expand_path("#{dir}/../../lib/khuzdul/df_raw")
 
