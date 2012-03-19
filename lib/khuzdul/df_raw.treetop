@@ -56,11 +56,7 @@ grammar DfRaw
   end
 
   rule obj_type
-    name {
-      def to_s
-        text_value
-      end
-    }
+    name <DfRaw::RawObjectType>
   end
 
   rule obj_decl
@@ -68,20 +64,11 @@ grammar DfRaw
   end
 
   rule obj_subtype
-    name {
-      def to_s
-        text_value
-      end
-    }
+    name <DfRaw::RawObjectType>
   end
 
   rule obj_def
-    cmnt? "[" obj_subtype ":" name "]" line_separator attr_entity* line_separator* {
-      def printable?; true; end
-      def inspect
-        obj_subtype.to_s+":"+name.text_value
-      end
-    }
+    cmnt? "[" obj_subtype ":" name "]" line_separator attr_entity* line_separator* <DfRaw::RawObject>
   end
 
 end

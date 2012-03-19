@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'test/unit'
 require 'treetop'
+require 'khuzdul/node_types'
 
 dir = File.dirname(__FILE__)
 require "test_helper"
