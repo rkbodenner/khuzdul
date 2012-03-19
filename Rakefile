@@ -1,13 +1,13 @@
 require 'rubygems'
+require 'rubygems/package_task'
 require 'rake'
-require 'rake/gempackagetask'
 require 'rake/testtask'
 
 task :default => "test:all"
 
 load "./khuzdul.gemspec"
 
-Rake::GemPackageTask.new($gemspec) do |pkg|
+Gem::PackageTask.new($gemspec) do |pkg|
   pkg.need_tar = true
 end
 
